@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Vue.js SVG graph example</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Delete ".min" for console warnings in development -->
+  </head>
+  <body>
+
+    <!-- template for the polygraph component. -->
+    <script>
+        // const p1 = Promise.resolve();
+        // setTimeout(()=> {
+        //     console.log('a')
+        // }, 200)
+        // p1.then(() => {
+        //     console.log('b')
+        // })
+        console.log('1');
+
+// 宏任务A
+setTimeout(function() {
+    console.log('2');
+    Promise.resolve().then(function() {
+        console.log('3');
+    })
+    new Promise(function(resolve) {
+        console.log('4');
+        resolve();
+    }).then(function() {
+        console.log('5')
+    })
+}, 100)
+
+// 微任务1
+Promise.resolve().then(function() {
+    console.log('6');
+})
+
+new Promise(function(resolve) {
+    console.log('7');
+    resolve();
+}).then(function() {
+    // 微任务2
+    console.log('8')
+})
+
+// 宏任务B
+setTimeout(function() {
+    console.log('9');
+    Promise.resolve().then(function() {
+        // 微任务3
+        console.log('10');
+    })
+    new Promise(function(resolve) {
+        console.log('11');
+        resolve();
+    }).then(function() {
+        // 微任务4
+        console.log('12')
+    })
+},200)
+
+console.log('13')
+
+// 1,7,13,6,8, 2,4,9,11,3,5,10,12
+        </script>
+     
+
+  </body>
+</html>
